@@ -22,30 +22,19 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
                  fillColor: getColor(feature.geometry.coordinates[2]),
                  fillOpacity: 1,
                  weight: 1
-            }).bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);;
+            }).bindPopup(`<h3>${feature.properties.place}</h3><hr><p>Magnitude: ${feature.properties.mag}<br>Depth: ${feature.geometry.coordinates[2]} kms</p>`);
         }
     }).addTo(myMap);
 });
 
 function getColor(depth) {
-    if (depth < 10) {
-        return '#f5ff00';
-    }
-    else if (depth>=10 && depth<30) {
-        return '#f5cc00';
-    }
-    else if (depth>=30 && depth<50) {
-        return '#f59900';
-    }
-    else if (depth>=50 && depth<70) {
-        return '#f56600';
-    }
-    else if (depth>=70 && depth<90) {
-        return '#f53300';
-    }
-    else {
-        return '#f50000';
-    }
+    return depth > 90 ? '#FF0000' :
+           depth > 70  ? '#FF5500' :
+           depth > 50  ? '#FFAA00' :
+           depth > 30  ? '#FFD700' :
+           depth > 10  ? '#AAFF00' :
+           depth > -10 ? '#55FF00' :
+                         '#00FF00';
 }
 
 // Create a legend to display information about our map.
